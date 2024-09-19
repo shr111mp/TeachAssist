@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserDetailsActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="88dp"
+        android:text="Input your user details"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.294" />
+
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="156dp"
+        android:hint="Name"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginHorizontal="20dp"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/editTextGrade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:hint="Grade level"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/editTextName"
+        tools:layout_editor_absoluteX="0dp" />
+
+
+    <EditText
+        android:id="@+id/editTextSubject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:hint="Subject"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/editTextGrade"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/TnginaButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+        android:text="Tngina"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSubject" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

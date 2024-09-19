@@ -3,6 +3,7 @@ package com.example.teachassist;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,12 +20,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import org.w3c.dom.Text;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -33,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
     FirebaseAuth mAuth;
 
+    //Check if user is already logged in
     @Override
     public void onStart() {
         super.onStart();
@@ -56,14 +55,16 @@ public class LoginActivity extends AppCompatActivity {
             return insets;
 
         });
-
-
+        //Instantiate Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-        SignInButton signInButton = findViewById(R.id.sign_in_button);
+
+
+        SignInButton signInButton = findViewById(R.id.sign_in_button_google);
         TextView textSignUp = findViewById(R.id.textViewSignUp);
         editLoginEmail = findViewById(R.id.emailEditText);
         editLoginPassword = findViewById(R.id.passwordEditText);
         btnLogin = findViewById(R.id.loginBtn);
+
 
 
 
@@ -73,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
             }
         });
-
+        //Login Function using Firebase Auth
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,6 +98,9 @@ public class LoginActivity extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     Toast.makeText(LoginActivity.this, "Login Success",Toast.LENGTH_SHORT);
+                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                    startActivity(intent);
+                                    finish();
 
                                 } else {
                                     // If sign in fails, display a message to the user.
@@ -109,6 +113,9 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+
+
 
 
 

@@ -27,7 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class SignUpActivity extends AppCompatActivity {
 
 
-    EditText editemail, editpassword;
+    EditText editemail, editpassword, editVpassword;
     Button signupButton;
     ImageView backBtn;
     FirebaseAuth mAuth;
@@ -46,6 +46,7 @@ public class SignUpActivity extends AppCompatActivity {
         backBtn = findViewById(R.id.btnBack);
         editemail = findViewById(R.id.editEmail);
         editpassword = findViewById(R.id.editPassword);
+        editVpassword = findViewById(R.id.editVerifyPassword);
         signupButton = findViewById(R.id.signupButton);
 
 
@@ -59,9 +60,10 @@ public class SignUpActivity extends AppCompatActivity {
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email, password;
+                String email, password, Vpassword;
                 email = String.valueOf(editemail.getText().toString());
                 password = String.valueOf(editpassword.getText().toString());
+                Vpassword = String.valueOf(editVpassword.getText().toString());
 
                 if(TextUtils.isEmpty(email)){
                     Toast.makeText(SignUpActivity.this, "Please input a valid email", Toast.LENGTH_SHORT).show();
@@ -70,6 +72,7 @@ public class SignUpActivity extends AppCompatActivity {
                 if(TextUtils.isEmpty(password)){
                     Toast.makeText(SignUpActivity.this, "Password not available", Toast.LENGTH_SHORT).show();
                 }
+
                 else {
                     mAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -79,6 +82,9 @@ public class SignUpActivity extends AppCompatActivity {
                                         // Sign in success, update UI with the signed-in user's information
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         Toast.makeText(SignUpActivity.this, "Account Created", Toast.LENGTH_SHORT);
+                                        Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Toast.makeText(SignUpActivity.this, "Authentication failed.",
