@@ -10,33 +10,29 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="264dp"
+        android:layout_width="450dp"
+        android:layout_height="423dp"
+        android:layout_marginBottom="236dp"
         android:src="@drawable/teachassistlogo"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="-16dp" />
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_width="102dp"
+        android:layout_height="49dp"
         android:backgroundTint="@color/TeachAssistGreen"
         android:text="Login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        tools:layout_editor_absoluteX="144dp"
+        tools:layout_editor_absoluteY="540dp" />
 
     <Button
         android:id="@+id/btnSignUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_width="103dp"
+        android:layout_height="50dp"
         android:backgroundTint="@color/TeachAssistGreen"
         android:text="SignUp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+        tools:layout_editor_absoluteX="144dp"
+        tools:layout_editor_absoluteY="599dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
