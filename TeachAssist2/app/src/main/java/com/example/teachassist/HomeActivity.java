@@ -1,72 +1,108 @@
 package com.example.teachassist;
 
-import static com.example.teachassist.R.id.nav_home;
+import static com.example.teachassist.R.id.bottomNavigationView;
+import static com.example.teachassist.R.id.home;
+import static com.example.teachassist.R.id.profile;
 
-import android.annotation.SuppressLint;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.example.teachassist.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth mAuth;
-    private View signout;
-    private TextView welcomeText;
+    private FirebaseDatabase mdb;
+    BottomNavigationView btmNavView;
+    HomeFragment homeFragment = new HomeFragment();
+    ProfileFragment profileFragment = new ProfileFragment();
+    SettingsFragment settingsFragment = new SettingsFragment();
 
-    @SuppressLint("NonConstantResourceId")
+
+
+    DatabaseReference postRef;
+    public void onStart() {
+        super.onStart();
+        mdb = FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        String uid = mAuth.getUid().toString();
+        postRef = FirebaseDatabase.getInstance().getReference().child("TeachAssist").child("UserData");
+        postRef.orderByChild("UID").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    Toast.makeText(HomeActivity.this, "Welcome to TeachAssist", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(HomeActivity.this, UserDetailsActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Handle window insets for full screen compatibility
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        btmNavView = findViewById(R.id.bottomNavigationView);
+        btmNavView.setOnNavigationItemSelectedListener(this);
+        btmNavView.setSelectedItemId(R.id.home);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView,homeFragment).commit();
 
-        // Firebase authentication
-        mAuth = FirebaseAuth.getInstance();
-        signout = findViewById(R.id.buttonLogOut);
-        welcomeText = findViewById(R.id.textWelcome);
-        String uid = mAuth.getCurrentUser().getUid();
-        welcomeText.setText("Welcome, " + uid);
-
-        // Handle signout
-        signout.setOnClickListener(view -> {
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(HomeActivity.this, MainActivity.class));
-            finish();
-        });
-
-        // Setup bottom navigation
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(nav_home);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.nav_home:
-                    // Stay in HomeActivity
-                    return true;
-                case R.id.nav_settings:
-                    startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
-                    overridePendingTransition(0, 0);
-                    return true;
-                case R.id.nav_profile:
-                    startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
-                    overridePendingTransition(0, 0);
-                    return true;
-            }
-            return false;
-        });
     }
+
+
+
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        int itemId = menuItem.getItemId();
+        if (itemId == R.id.home) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentContainerView, homeFragment)
+                    .commit();
+            return true;
+        } else if (itemId == R.id.settings) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentContainerView, settingsFragment)
+                    .commit();
+            return true;
+        } else if (itemId == R.id.profile) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentContainerView, profileFragment)
+                    .commit();
+            return true;
+        }
+        return false;
+    }
+}
+

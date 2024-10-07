@@ -39,7 +39,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         editName = findViewById(R.id.editTextName);
         editGrade = findViewById(R.id.editTextGrade);
         editSubject = findViewById(R.id.editTextSubject);
-        submitButton = findViewById(R.id.submitButton); // Updated
+        submitButton = findViewById(R.id.SubmitButton); // Updated
 
         // Handle button click to push data into Firebase
         submitButton.setOnClickListener(view -> {

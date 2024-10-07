@@ -27,6 +27,9 @@ android {
             )
         }
     }
+
+
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -47,9 +50,11 @@ dependencies {
     //Firebase BOM
     implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
     implementation("com.google.firebase:firebase-analytics")
-
+    //Firebase Implementations
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.android.gms:play-services-auth:21.2.0")
     implementation("com.google.firebase:firebase-database")
+    //Fragment Implementations
+    implementation("androidx.fragment:fragment:1.8.4")
 
 }
